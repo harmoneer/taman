@@ -14,7 +14,12 @@ pub fn draw_stats(f: &mut Frame, app: &App, area: Rect) {
         .constraints([Constraint::Percentage(50), Constraint::Percentage(50)])
         .split(area);
 
-    // Left: Stats categories
+    // Left: Stats categories and breakdown
+    let left_chunks = Layout::default()
+        .direction(Direction::Vertical)
+        .constraints([Constraint::Min(10), Constraint::Min(5)])
+        .split(chunks[0]);
+
     let categories = vec![
         format!("Sessions: {}", app.statistics.total_sessions),
         format!("Minutes: {}", app.statistics.total_minutes),
@@ -41,7 +46,31 @@ pub fn draw_stats(f: &mut Frame, app: &App, area: Rect) {
         .collect();
     let list = List::new(items)
         .block(Block::default().title(Title::from(Line::from(" Today's Stats ").style(Style::default().fg(app.theme.blocks))).alignment(Alignment::Center)).borders(Borders::ALL).style(Style::default().fg(app.theme.blocks)));
-    f.render_widget(list, chunks[0]);
+    f.render_widget(list, left_chunks[0]);
+
+    // Breakdown
+    let breakdown_content = match app.stats_selected {
+        0 => format!("Focus: {}, Break: {}", app.statistics.total_focus_sessions, app.statistics.total_break_sessions),
+        1 => format!("Focused: {}, Break: {}", app.statistics.total_focus_minutes, app.statistics.total_break_minutes),
+        2 => {
+            if app.statistics.recent_sessions.is_empty() {
+                "No session data".to_string()
+            } else {
+                format!("Session distribution: {:?}", app.statistics.recent_sessions)
+            }
+        }
+        3 => "Minutes focused distribution: N/A".to_string(),
+        4 => "Break sessions distribution: N/A".to_string(),
+        5 => "Minutes resting distribution: N/A".to_string(),
+        6 => "Grown plants distribution: N/A".to_string(),
+        7 => format!("Sessions distribution: {:?}", app.statistics.recent_sessions),
+        8 => "Minutes distribution: N/A".to_string(),
+        _ => "Breakdown not available".to_string(),
+    };
+    let breakdown = Paragraph::new(breakdown_content)
+        .block(Block::default().title(Title::from(Line::from(" Breakdown ").style(Style::default().fg(app.theme.blocks))).alignment(Alignment::Center)).borders(Borders::ALL).style(Style::default().fg(app.theme.blocks)))
+        .style(Style::default().fg(app.theme.text));
+    f.render_widget(breakdown, left_chunks[1]);
 
     // Right: Chart
     match app.stats_selected {
