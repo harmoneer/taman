@@ -2,7 +2,7 @@ use crossterm::event::{KeyCode, KeyEvent};
 
 #[derive(Debug, Clone, Copy)]
 pub enum InputAction {
-    Tab(u8), // 1-4
+    Tab(u8), // 1-4...
     Left,
     Right,
     Up,
