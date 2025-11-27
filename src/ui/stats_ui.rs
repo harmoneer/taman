@@ -268,7 +268,11 @@ pub fn draw_stats(f: &mut Frame, app: &App, area: Rect) {
                 .pixel_size(PixelSize::Quadrant)
                 .alignment(Alignment::Center)
                 .build();
-            let block = Block::default().title(Line::from(" Current Streak ").style(Style::default().fg(app.theme.blocks))).borders(Borders::ALL).style(Style::default().fg(app.theme.blocks)).padding(Padding::new(1, 0, 1, 0));
+            let block = Block::default()
+                .title(Line::from(" Current Streak ").style(Style::default().fg(app.theme.blocks)))
+                .borders(Borders::ALL)
+                .style(Style::default().fg(app.theme.blocks))
+                .padding(Padding::new(1, 0, 1, 0));
             let inner = block.inner(chunks[1]);
             f.render_widget(block, chunks[1]);
             let areas = Layout::vertical([
@@ -303,22 +307,22 @@ pub fn draw_stats(f: &mut Frame, app: &App, area: Rect) {
                 .title_bottom(Line::from(" days ").alignment(Alignment::Center))
                 .borders(Borders::ALL)
                 .padding(Padding::new(0, 0, 0, 0));
-            let counting_inner = counting_block.inner(areas[1]);
-            f.render_widget(counting_block, areas[1]);
-            let counting_areas = Layout::vertical([
+            let counting_areas = Layout::horizontal([
+                Constraint::Fill(1),
+                Constraint::Length(50),
+                Constraint::Fill(1),
+            ]).split(areas[1]);
+            let counting_inner = counting_block.inner(counting_areas[1]);
+            f.render_widget(counting_block, counting_areas[1]);
+            let counting_vertical = Layout::vertical([
                 Constraint::Length(1),
                 Constraint::Fill(1),
             ]).split(counting_inner);
-            f.render_widget(big_streak, counting_areas[1]);
+            f.render_widget(big_streak, counting_vertical[1]);
             f.render_widget(
                 Paragraph::new("")
                     .alignment(Alignment::Center),
                 areas[2],
-            );
-            f.render_widget(
-                Paragraph::new("")
-                    .alignment(Alignment::Center),
-                areas[3],
             );
             f.render_widget(
                 Paragraph::new("")
