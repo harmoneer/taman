@@ -1,3 +1,4 @@
+use chrono::Local;
 use crate::garden::Garden;
 use crate::input::InputAction;
 use crate::plant::Plant;
@@ -76,20 +77,45 @@ impl App {
             self.statistics.total_sessions += 1;
             let minutes = self.timer.session_type.duration_minutes(&self.settings);
             self.statistics.total_minutes += minutes;
+            let today = Local::now();
+            // Update recent_sessions
+            if let Some((_, count)) = self.statistics.recent_sessions.iter_mut().find(|(d, _)| d.date_naive() == today.date_naive()) {
+                *count += 1;
+            } else {
+                self.statistics.recent_sessions.push((today, 1));
+            }
             match self.timer.session_type {
                 crate::timer::SessionType::Focus => {
                     self.statistics.total_focus_sessions += 1;
                     self.statistics.total_focus_minutes += minutes;
+                    // Update recent_focus_sessions
+                    if let Some((_, count)) = self.statistics.recent_focus_sessions.iter_mut().find(|(d, _)| d.date_naive() == today.date_naive()) {
+                        *count += 1;
+                    } else {
+                        self.statistics.recent_focus_sessions.push((today, 1));
+                    }
                 }
                 _ => {
                     self.statistics.total_break_sessions += 1;
                     self.statistics.total_break_minutes += minutes;
+                    // Update recent_break_sessions
+                    if let Some((_, count)) = self.statistics.recent_break_sessions.iter_mut().find(|(d, _)| d.date_naive() == today.date_naive()) {
+                        *count += 1;
+                    } else {
+                        self.statistics.recent_break_sessions.push((today, 1));
+                    }
                 }
             }
             if self.plant.is_complete() {
                 self.garden.add_completed_plant(self.plant.clone());
                 self.plant = Plant::new();
                 self.statistics.completed_plants += 1;
+                // Update recent_plants
+                if let Some((_, count)) = self.statistics.recent_plants.iter_mut().find(|(d, _)| d.date_naive() == today.date_naive()) {
+                    *count += 1;
+                } else {
+                    self.statistics.recent_plants.push((today, 1));
+                }
             }
             // Auto run next
             if let Some(idx) = self.timer.auto_run_index {

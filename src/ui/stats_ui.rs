@@ -2,7 +2,7 @@ use ratatui::{
     layout::{Alignment, Constraint, Direction, Layout, Rect},
     style::{Modifier, Style},
     text::Line,
-    widgets::{block::Title, BarChart, Block, Borders, Chart, Dataset, GraphType, List, ListItem, Paragraph, Sparkline},
+    widgets::{block::Title, BarChart, Block, Borders, Chart, Dataset, GraphType, List, ListItem, Paragraph},
     Frame,
 };
 
@@ -75,13 +75,16 @@ pub fn draw_stats(f: &mut Frame, app: &App, area: Rect) {
     // Right: Chart
     match app.stats_selected {
         0 => {
-            // Sparkline for Sessions
-            let data: Vec<u64> = app.statistics.recent_sessions.iter().map(|&x| x as u64).collect();
-            let sparkline = Sparkline::default()
+            // BarChart for Sessions
+            let mut data: Vec<(String, u64)> = app.statistics.recent_sessions.iter().map(|(d, v)| (d.format("%Y-%m-%d").to_string(), *v as u64)).collect();
+            data.sort_by_key(|(date, _)| date.clone());
+            let data_refs: Vec<(&str, u64)> = data.iter().map(|(s, v)| (s.as_str(), *v)).collect();
+            let barchart = BarChart::default()
                 .block(Block::default().title(Line::from(" Total Sessions ").style(Style::default().fg(app.theme.blocks))).borders(Borders::ALL).style(Style::default().fg(app.theme.blocks)))
-                .style(Style::default().fg(app.theme.gauge_running)) // gold
-                .data(&data);
-            f.render_widget(sparkline, chunks[1]);
+                .data(&data_refs)
+                .bar_style(Style::default().fg(app.theme.gauge_running))
+                .value_style(Style::default().fg(app.theme.text));
+            f.render_widget(barchart, chunks[1]);
         }
         1 => {
             // Chart for Minutes
@@ -97,14 +100,16 @@ pub fn draw_stats(f: &mut Frame, app: &App, area: Rect) {
             f.render_widget(chart, chunks[1]);
         }
         2 => {
-            // Sparkline for Focus Sessions
-            let mut data: Vec<u64> = app.statistics.recent_sessions.iter().map(|&x| x as u64).collect();
-            if data.is_empty() { data = vec![0, 1, 2, 3, 4, 5]; }
-            let sparkline = Sparkline::default()
+            // BarChart for Focus Sessions
+            let mut data: Vec<(String, u64)> = app.statistics.recent_focus_sessions.iter().map(|(d, v)| (d.format("%Y-%m-%d").to_string(), *v as u64)).collect();
+            data.sort_by_key(|(date, _)| date.clone());
+            let data_refs: Vec<(&str, u64)> = data.iter().map(|(s, v)| (s.as_str(), *v)).collect();
+            let barchart = BarChart::default()
                 .block(Block::default().title(Line::from(" Total Focus Sessions ").style(Style::default().fg(app.theme.blocks))).borders(Borders::ALL).style(Style::default().fg(app.theme.blocks)))
-                .style(Style::default().fg(app.theme.gauge_running)) // gold
-                .data(&data);
-            f.render_widget(sparkline, chunks[1]);
+                .data(&data_refs)
+                .bar_style(Style::default().fg(app.theme.gauge_running))
+                .value_style(Style::default().fg(app.theme.text));
+            f.render_widget(barchart, chunks[1]);
         }
         3 => {
             // Chart for Minutes Focused
@@ -120,13 +125,16 @@ pub fn draw_stats(f: &mut Frame, app: &App, area: Rect) {
             f.render_widget(chart, chunks[1]);
         }
         4 => {
-            // Sparkline for Break Sessions
-            let data = vec![app.statistics.total_break_sessions as u64]; // single point, but use Sparkline
-            let sparkline = Sparkline::default()
+            // BarChart for Break Sessions
+            let mut data: Vec<(String, u64)> = app.statistics.recent_break_sessions.iter().map(|(d, v)| (d.format("%Y-%m-%d").to_string(), *v as u64)).collect();
+            data.sort_by_key(|(date, _)| date.clone());
+            let data_refs: Vec<(&str, u64)> = data.iter().map(|(s, v)| (s.as_str(), *v)).collect();
+            let barchart = BarChart::default()
                 .block(Block::default().title(Line::from(" Total Break Sessions ").style(Style::default().fg(app.theme.blocks))).borders(Borders::ALL).style(Style::default().fg(app.theme.blocks)))
-                .style(Style::default().fg(app.theme.sparkline)) // blue
-                .data(&data);
-            f.render_widget(sparkline, chunks[1]);
+                .data(&data_refs)
+                .bar_style(Style::default().fg(app.theme.sparkline))
+                .value_style(Style::default().fg(app.theme.text));
+            f.render_widget(barchart, chunks[1]);
         }
         5 => {
             // Chart for Minutes Resting
@@ -143,11 +151,13 @@ pub fn draw_stats(f: &mut Frame, app: &App, area: Rect) {
         }
         6 => {
             // BarChart for Grown Plants
-            let data = vec![("Plants", app.statistics.completed_plants as u64)];
+            let mut data: Vec<(String, u64)> = app.statistics.recent_plants.iter().map(|(d, v)| (d.format("%Y-%m-%d").to_string(), *v as u64)).collect();
+            data.sort_by_key(|(date, _)| date.clone());
+            let data_refs: Vec<(&str, u64)> = data.iter().map(|(s, v)| (s.as_str(), *v)).collect();
             let barchart = BarChart::default()
                 .block(Block::default().title(Line::from(" Total Grown Plants ").style(Style::default().fg(app.theme.blocks))).borders(Borders::ALL).style(Style::default().fg(app.theme.blocks)))
-                .data(&data)
-                .bar_style(Style::default().fg(app.theme.highlight)) // love
+                .data(&data_refs)
+                .bar_style(Style::default().fg(app.theme.highlight))
                 .value_style(Style::default().fg(app.theme.text));
             f.render_widget(barchart, chunks[1]);
         }
