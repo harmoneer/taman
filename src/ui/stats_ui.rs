@@ -261,10 +261,10 @@ pub fn draw_stats(f: &mut Frame, app: &App, area: Rect) {
         }
         7 => {
             // Text display for Current Streak
-            let date = Local::now().format("%d %b %Y").to_string();
+            let date = app.garden.current_streak_start_date.map(|d| d.with_timezone(&Local).format("%d %b %Y").to_string()).unwrap_or("N/A".to_string());
             let streak = app.garden.current_streak;
             let big_streak = BigText::builder()
-                .lines(vec![Line::from(format!("{:^5}", streak))])
+                .lines(vec![Line::from(format!("{:^3}", streak.to_string()))])
                 .pixel_size(PixelSize::Quadrant)
                 .alignment(Alignment::Center)
                 .build();
@@ -328,41 +328,70 @@ pub fn draw_stats(f: &mut Frame, app: &App, area: Rect) {
         }
         8 => {
             // Text display for Longest Streak
+            let date = app.garden.longest_streak_end_date.map(|d| d.with_timezone(&Local).format("%d %b %Y").to_string()).unwrap_or("N/A".to_string());
             let streak = app.garden.longest_streak;
             let big_streak = BigText::builder()
                 .lines(vec![Line::from(format!("{:^3}", streak.to_string()))])
                 .pixel_size(PixelSize::Quadrant)
                 .alignment(Alignment::Center)
                 .build();
-            let block = Block::default()
-                .title(Line::from(" Longest Streak ").style(Style::default().fg(app.theme.blocks)))
-                .borders(Borders::ALL)
-                .style(Style::default().fg(app.theme.blocks))
-                .padding(Padding::new(0, 0, 0, 0));
+            let block = Block::default().title(Line::from(" Longest Streak ").style(Style::default().fg(app.theme.blocks))).borders(Borders::ALL).style(Style::default().fg(app.theme.blocks)).padding(Padding::new(1, 0, 1, 0));
             let inner = block.inner(chunks[1]);
             f.render_widget(block, chunks[1]);
-            let vertical_areas = Layout::vertical([
-                Constraint::Fill(1),
+            let areas = Layout::vertical([
+                Constraint::Length(8),
                 Constraint::Length(8),
                 Constraint::Fill(1),
+                Constraint::Length(1),
             ]).split(inner);
-            let sub_areas = Layout::horizontal([
+            let date_block = Block::default()
+                .title(Line::from(" Date Ended ").alignment(Alignment::Center))
+                .borders(Borders::ALL)
+                .padding(Padding::new(1, 0, 0, 0));
+            let block_areas = Layout::horizontal([
                 Constraint::Fill(1),
-                Constraint::Length(12),
+                Constraint::Length(50),
                 Constraint::Fill(1),
-            ]).split(vertical_areas[1]);
-            let sub_block = Block::default()
+            ]).split(areas[0]);
+            let date_inner = date_block.inner(block_areas[1]);
+            f.render_widget(date_block, block_areas[1]);
+            let big_date = BigText::builder()
+                .lines(vec![Line::from(date.as_str())])
+                .pixel_size(PixelSize::Quadrant)
+                .alignment(Alignment::Center)
+                .build();
+            let date_areas = Layout::vertical([
+                Constraint::Length(1),
+                Constraint::Fill(1),
+            ]).split(date_inner);
+            f.render_widget(big_date, date_areas[1]);
+            let counting_block = Block::default()
+                .title(Line::from(" Counting ").alignment(Alignment::Center))
                 .title_bottom(Line::from(" days ").alignment(Alignment::Center))
                 .borders(Borders::ALL)
                 .padding(Padding::new(0, 0, 0, 0));
-            let sub_inner = sub_block.inner(sub_areas[1]);
-            f.render_widget(sub_block, sub_areas[1]);
-            let areas = Layout::vertical([
+            let counting_areas = Layout::horizontal([
+                Constraint::Fill(1),
+                Constraint::Length(50),
+                Constraint::Fill(1),
+            ]).split(areas[1]);
+            let counting_inner = counting_block.inner(counting_areas[1]);
+            f.render_widget(counting_block, counting_areas[1]);
+            let counting_vertical = Layout::vertical([
                 Constraint::Length(1),
-                Constraint::Length(5),
-                Constraint::Length(1),
-            ]).split(sub_inner);
-            f.render_widget(big_streak, areas[1]);
+                Constraint::Fill(1),
+            ]).split(counting_inner);
+            f.render_widget(big_streak, counting_vertical[1]);
+            f.render_widget(
+                Paragraph::new("")
+                    .alignment(Alignment::Center),
+                areas[2],
+            );
+            f.render_widget(
+                Paragraph::new("")
+                    .alignment(Alignment::Center),
+                areas[3],
+            );
         }
 
         _ => {}

@@ -12,6 +12,8 @@ pub struct Garden {
     pub completed_plants: Vec<CompletedPlant>,
     pub current_streak: u32,
     pub longest_streak: u32,
+    pub current_streak_start_date: Option<DateTime<Utc>>,
+    pub longest_streak_end_date: Option<DateTime<Utc>>,
 }
 
 impl Garden {
@@ -20,6 +22,8 @@ impl Garden {
             completed_plants: vec![],
             current_streak: 0,
             longest_streak: 0,
+            current_streak_start_date: None,
+            longest_streak_end_date: None,
         }
     }
 
