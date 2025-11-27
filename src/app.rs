@@ -74,7 +74,18 @@ impl App {
             // Session finished
             self.plant.add_growth();
             self.statistics.total_sessions += 1;
-            self.statistics.total_minutes += self.timer.session_type.duration_minutes(&self.settings);
+            let minutes = self.timer.session_type.duration_minutes(&self.settings);
+            self.statistics.total_minutes += minutes;
+            match self.timer.session_type {
+                crate::timer::SessionType::Focus => {
+                    self.statistics.total_focus_sessions += 1;
+                    self.statistics.total_focus_minutes += minutes;
+                }
+                _ => {
+                    self.statistics.total_break_sessions += 1;
+                    self.statistics.total_break_minutes += minutes;
+                }
+            }
             if self.plant.is_complete() {
                 self.garden.add_completed_plant(self.plant.clone());
                 self.plant = Plant::new();
@@ -241,7 +252,7 @@ impl App {
                 }
             }
             Tab::Stats => {
-                let max = 6; // 7 categories
+                let max = 8; // 9 categories
                 if self.stats_selected < max {
                     self.stats_selected += 1;
                 }

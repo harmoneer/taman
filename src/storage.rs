@@ -24,7 +24,11 @@ impl Default for Settings {
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Statistics {
     pub total_sessions: u32,
+    pub total_focus_sessions: u32,
+    pub total_break_sessions: u32,
     pub total_minutes: u64,
+    pub total_focus_minutes: u64,
+    pub total_break_minutes: u64,
     pub completed_plants: u32,
     pub current_streak: u32,
     pub longest_streak: u32,
@@ -35,7 +39,11 @@ impl Default for Statistics {
     fn default() -> Self {
         Statistics {
             total_sessions: 0,
+            total_focus_sessions: 0,
+            total_break_sessions: 0,
             total_minutes: 0,
+            total_focus_minutes: 0,
+            total_break_minutes: 0,
             completed_plants: 0,
             current_streak: 0,
             longest_streak: 0,
