@@ -32,6 +32,7 @@ pub struct App {
     pub timer_selected_session: usize,
     pub timer_selected_auto: usize,
     pub settings_selected: usize,
+    pub stats_selected: usize,
     pub focus: Focus,
     pub should_quit: bool,
 }
@@ -62,6 +63,7 @@ impl App {
             timer_selected_session: 0,
             timer_selected_auto: 0,
             settings_selected: 0,
+            stats_selected: 0,
             focus: Focus::Left,
             should_quit: false,
         }
@@ -205,6 +207,11 @@ impl App {
                     self.adjust_setting(1);
                 }
             }
+            Tab::Stats => {
+                if self.stats_selected > 0 {
+                    self.stats_selected -= 1;
+                }
+            }
             _ => {}
         }
     }
@@ -231,6 +238,12 @@ impl App {
                     }
                 } else {
                     self.adjust_setting(-1);
+                }
+            }
+            Tab::Stats => {
+                let max = 6; // 7 categories
+                if self.stats_selected < max {
+                    self.stats_selected += 1;
                 }
             }
             _ => {}
