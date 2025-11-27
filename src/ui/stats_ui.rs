@@ -47,7 +47,7 @@ pub fn draw_stats(f: &mut Frame, app: &App, area: Rect) {
         format!("Break Sessions: {}", app.statistics.total_break_sessions),
         format!("Minutes Resting: {}", app.statistics.total_break_minutes),
         format!("Grown Plants: {}", app.statistics.completed_plants),
-        format!("Current Streak: {}", app.garden.current_streak),
+        format!("Current Streak: {}", if app.garden.current_streak == 0 { 1 } else { app.garden.current_streak }),
         format!("Longest Streak: {}", app.garden.longest_streak),
     ];
     let items: Vec<ListItem> = categories
@@ -82,8 +82,14 @@ pub fn draw_stats(f: &mut Frame, app: &App, area: Rect) {
         4 => "Break sessions distribution: N/A".to_string(),
         5 => "Minutes resting distribution: N/A".to_string(),
         6 => "Grown plants distribution: N/A".to_string(),
-        7 => format!("Sessions distribution: {:?}", app.statistics.recent_sessions),
-        8 => "Minutes distribution: N/A".to_string(),
+        7 => {
+            let dates = app.garden.current_streak_dates.iter().map(|d| d.format("%Y-%m-%d").to_string()).collect::<Vec<_>>().join("\n");
+            format!("Streak Dates:\n{}", dates)
+        },
+        8 => {
+            let dates = app.garden.longest_streak_dates.iter().map(|d| d.format("%Y-%m-%d").to_string()).collect::<Vec<_>>().join("\n");
+            format!("Streak Dates:\n{}", dates)
+        },
         _ => "Breakdown not available".to_string(),
     };
     let breakdown = Paragraph::new(breakdown_content)
@@ -261,10 +267,14 @@ pub fn draw_stats(f: &mut Frame, app: &App, area: Rect) {
         }
         7 => {
             // Text display for Current Streak
-            let date = app.garden.current_streak_start_date.map(|d| d.with_timezone(&Local).format("%d %b %Y").to_string()).unwrap_or("N/A".to_string());
-            let streak = app.garden.current_streak;
+            let date = if app.garden.current_streak == 0 {
+                Local::now().format("%d %b %Y").to_string()
+            } else {
+                app.garden.current_streak_start_date.map(|d| d.with_timezone(&Local).format("%d %b %Y").to_string()).unwrap_or("N/A".to_string())
+            };
+            let display_streak = if app.garden.current_streak == 0 { 1 } else { app.garden.current_streak };
             let big_streak = BigText::builder()
-                .lines(vec![Line::from(format!("{:^3}", streak.to_string()))])
+                .lines(vec![Line::from(format!("{:^3}", display_streak.to_string()))])
                 .pixel_size(PixelSize::Quadrant)
                 .alignment(Alignment::Center)
                 .build();

@@ -1,4 +1,4 @@
-use chrono::{DateTime, Utc};
+use chrono::{DateTime, NaiveDate, Utc};
 use crate::plant::Plant;
 
 #[derive(Debug, Clone)]
@@ -14,6 +14,9 @@ pub struct Garden {
     pub longest_streak: u32,
     pub current_streak_start_date: Option<DateTime<Utc>>,
     pub longest_streak_end_date: Option<DateTime<Utc>>,
+    pub last_session_date: Option<DateTime<Utc>>,
+    pub current_streak_dates: Vec<NaiveDate>,
+    pub longest_streak_dates: Vec<NaiveDate>,
 }
 
 impl Garden {
@@ -24,6 +27,9 @@ impl Garden {
             longest_streak: 0,
             current_streak_start_date: None,
             longest_streak_end_date: None,
+            last_session_date: None,
+            current_streak_dates: vec![],
+            longest_streak_dates: vec![],
         }
     }
 
