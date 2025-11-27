@@ -8,9 +8,11 @@ use ratatui::{
 use std::env;
 
 use crate::app::App;
+use crate::storage::Data;
 use chrono::{DateTime, Local};
 use ratatui::text::Span;
 use std::cmp::Reverse;
+use tui_big_text::{BigText, PixelSize};
 
 pub fn draw_stats(f: &mut Frame, app: &App, area: Rect) {
     let date_format = if env::var("LANG").unwrap_or_default().contains("US")
@@ -258,25 +260,101 @@ pub fn draw_stats(f: &mut Frame, app: &App, area: Rect) {
             f.render_widget(barchart, chunks[1]);
         }
         7 => {
-            // Chart for Current Streak
-            let data = vec![(0.0, 0.0), (1.0, app.garden.current_streak as f64)];
-            let dataset = Dataset::default()
-                .data(&data)
-                .graph_type(GraphType::Line)
-                .style(Style::default().fg(app.theme.highlight)); // accent
-            let chart = Chart::new(vec![dataset])
-                .block(Block::default().title(Line::from(" Current Streak ").style(Style::default().fg(app.theme.blocks))).borders(Borders::ALL).style(Style::default().fg(app.theme.blocks)))
-                .x_axis(ratatui::widgets::Axis::default().bounds([0.0, 1.0]))
-                .y_axis(ratatui::widgets::Axis::default().bounds([0.0, (app.garden.current_streak as f64).max(5.0)]));
-            f.render_widget(chart, chunks[1]);
+            // Text display for Current Streak
+            let date = Local::now().format("%d %b %Y").to_string();
+            let streak = app.garden.current_streak;
+            let big_streak = BigText::builder()
+                .lines(vec![Line::from(streak.to_string())])
+                .pixel_size(PixelSize::Quadrant)
+                .build();
+            let block = Block::default().title(Line::from(" Current Streak ").style(Style::default().fg(app.theme.blocks))).borders(Borders::ALL).style(Style::default().fg(app.theme.blocks)).padding(Padding::new(1, 0, 1, 0));
+            let inner = block.inner(chunks[1]);
+            f.render_widget(block, chunks[1]);
+            let areas = Layout::vertical([
+                Constraint::Length(8),
+                Constraint::Length(1),
+                Constraint::Fill(1),
+                Constraint::Length(1),
+            ]).split(inner);
+            let date_block = Block::default()
+                .title(Line::from(" Date Started ").alignment(Alignment::Center))
+                .borders(Borders::ALL)
+                .padding(Padding::new(1, 0, 0, 0));
+            let block_areas = Layout::horizontal([
+                Constraint::Fill(1),
+                Constraint::Length(50),
+                Constraint::Fill(1),
+            ]).split(areas[0]);
+            let date_inner = date_block.inner(block_areas[1]);
+            f.render_widget(date_block, block_areas[1]);
+            let big_date = BigText::builder()
+                .lines(vec![Line::from(date.as_str())])
+                .pixel_size(PixelSize::Quadrant)
+                .alignment(Alignment::Center)
+                .build();
+            let date_areas = Layout::vertical([
+                Constraint::Length(1),
+                Constraint::Fill(1),
+            ]).split(date_inner);
+            f.render_widget(big_date, date_areas[1]);
+            let counting_block = Block::default()
+                .title(Line::from(" Counting ").alignment(Alignment::Center))
+                .borders(Borders::ALL)
+                .padding(Padding::new(1, 0, 0, 0));
+            let counting_areas = Layout::horizontal([
+                Constraint::Fill(1),
+                Constraint::Length(50),
+                Constraint::Fill(1),
+            ]).split(areas[1]);
+            let counting_inner = counting_block.inner(counting_areas[1]);
+            f.render_widget(counting_block, counting_areas[1]);
+            let counting_split = Layout::vertical([
+                Constraint::Fill(1),
+                Constraint::Length(1),
+            ]).split(counting_inner);
+            f.render_widget(big_streak, counting_split[0]);
+            f.render_widget(
+                Paragraph::new("days")
+                    .alignment(Alignment::Center),
+                counting_split[1],
+            );
+            f.render_widget(
+                Paragraph::new("")
+                    .alignment(Alignment::Center),
+                areas[2],
+            );
+            f.render_widget(
+                Paragraph::new("")
+                    .alignment(Alignment::Center),
+                areas[3],
+            );
         }
         8 => {
-            // Paragraph for Longest Streak
-            let text = format!("Longest Streak: {}", app.garden.longest_streak);
-            let para = Paragraph::new(text)
-                .block(Block::default().title(Line::from(" Longest Streak ").style(Style::default().fg(app.theme.blocks))).borders(Borders::ALL).style(Style::default().fg(app.theme.blocks)))
-                .style(Style::default().fg(app.theme.text));
-            f.render_widget(para, chunks[1]);
+            // Text display for Longest Streak
+            let streak = app.garden.longest_streak;
+            let big_streak = BigText::builder()
+                .lines(vec![Line::from(streak.to_string())])
+                .pixel_size(PixelSize::Quadrant)
+                .build();
+            let block = Block::default().title(Line::from(" Longest Streak ").style(Style::default().fg(app.theme.blocks))).borders(Borders::ALL).style(Style::default().fg(app.theme.blocks)).padding(Padding::new(1, 0, 1, 0));
+            let inner = block.inner(chunks[1]);
+            f.render_widget(block, chunks[1]);
+            let areas = Layout::vertical([
+                Constraint::Length(1),
+                Constraint::Fill(1),
+                Constraint::Length(1),
+            ]).split(inner);
+            f.render_widget(
+                Paragraph::new("Longest Streak")
+                    .alignment(Alignment::Center),
+                areas[0],
+            );
+            f.render_widget(big_streak, areas[1]);
+            f.render_widget(
+                Paragraph::new("days")
+                    .alignment(Alignment::Center),
+                areas[2],
+            );
         }
 
         _ => {}
