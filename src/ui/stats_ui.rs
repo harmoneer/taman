@@ -86,7 +86,7 @@ pub fn draw_stats(f: &mut Frame, app: &App, area: Rect) {
         f.render_widget(pie, left_chunks[1]);
     } else if app.stats_selected == 1 {
         let data = vec![
-            PieSlice::new("Focused", app.statistics.total_focus_minutes as f64, app.theme.pine),
+            PieSlice::new("Focus", app.statistics.total_focus_minutes as f64, app.theme.pine),
             PieSlice::new("Break", app.statistics.total_break_minutes as f64, app.theme.rose),
         ];
         let pie = PieChart::new(data).block(Block::default().title_top(Line::from(" Breakdown ").style(Style::default().fg(app.theme.blocks))).borders(Borders::ALL).style(Style::default().fg(app.theme.blocks))).pie_char(symbols::PIE_CHAR_BLOCK);
@@ -304,7 +304,7 @@ pub fn draw_stats(f: &mut Frame, app: &App, area: Rect) {
                     .value(*value)
                     .label(date.format(date_format).to_string().into())
                     .text_value(format!("{:^5}", value))
-                    .value_style(Style::default().fg(app.theme.vertical_value).bg(app.theme.highlight))
+                    .value_style(Style::default().fg(app.theme.vertical_value).bg(app.theme.foam))
                     .style(Style::default().fg(app.theme.foam))
             }).collect();
             let barchart = BarChart::default()
