@@ -84,9 +84,15 @@ pub fn draw_stats(f: &mut Frame, app: &App, area: Rect) {
         ];
         let pie = PieChart::new(data).block(Block::default().title_top(Line::from(" Breakdown ").style(Style::default().fg(app.theme.blocks))).borders(Borders::ALL).style(Style::default().fg(app.theme.blocks))).pie_char(symbols::PIE_CHAR_BLOCK);
         f.render_widget(pie, left_chunks[1]);
+    } else if app.stats_selected == 1 {
+        let data = vec![
+            PieSlice::new("Focused", app.statistics.total_focus_minutes as f64, app.theme.pine),
+            PieSlice::new("Break", app.statistics.total_break_minutes as f64, app.theme.rose),
+        ];
+        let pie = PieChart::new(data).block(Block::default().title_top(Line::from(" Breakdown ").style(Style::default().fg(app.theme.blocks))).borders(Borders::ALL).style(Style::default().fg(app.theme.blocks))).pie_char(symbols::PIE_CHAR_BLOCK);
+        f.render_widget(pie, left_chunks[1]);
     } else {
         let breakdown_content = match app.stats_selected {
-            1 => format!("Focused: {}, Break: {}", app.statistics.total_focus_minutes, app.statistics.total_break_minutes),
             2 => {
                 let logs = app.statistics.session_log.iter().rev().filter(|l| matches!(l.session_type, crate::timer::SessionType::Focus)).take(10).map(|l| format!("Focus session - {} mins - {}", l.duration, l.end_time.format("%Y-%m-%dT%H:%M:%S%.6f%z"))).collect::<Vec<_>>().join("\n");
                 if logs.is_empty() { "No focus sessions".to_string() } else { logs }
