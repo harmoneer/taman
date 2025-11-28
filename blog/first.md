@@ -133,7 +133,7 @@ It worked… but:
 - Emojis are portable, readable, and cute  
 
 So we moved to an emoji model:
-```rust
+```
 pub enum PlantStage {
     Seed,       // 🌰
     Sprout,     // 🌱
