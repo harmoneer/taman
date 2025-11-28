@@ -72,7 +72,7 @@ pub fn draw_stats(f: &mut Frame, app: &App, area: Rect) {
         })
         .collect();
     let list = List::new(items)
-        .block(Block::default().title(Title::from(Line::from(" Today's Stats ").style(Style::default().fg(app.theme.blocks))).alignment(Alignment::Center)).borders(Borders::ALL).style(Style::default().fg(app.theme.blocks)));
+        .block(Block::default().title_top(Line::from(" Today's Stats ").style(Style::default().fg(app.theme.blocks))).borders(Borders::ALL).style(Style::default().fg(app.theme.blocks)));
     f.render_widget(list, left_chunks[0]);
 
     // Breakdown
@@ -124,7 +124,7 @@ pub fn draw_stats(f: &mut Frame, app: &App, area: Rect) {
         _ => "Breakdown not available".to_string(),
     };
     let breakdown = Paragraph::new(breakdown_content)
-        .block(Block::default().title(Title::from(Line::from(" Breakdown ").style(Style::default().fg(app.theme.blocks))).alignment(Alignment::Center)).borders(Borders::ALL).style(Style::default().fg(app.theme.blocks)))
+        .block(Block::default().title_top(Line::from(" Breakdown ").style(Style::default().fg(app.theme.blocks))).borders(Borders::ALL).style(Style::default().fg(app.theme.blocks)))
         .style(Style::default().fg(app.theme.text));
     f.render_widget(breakdown, left_chunks[1]);
 

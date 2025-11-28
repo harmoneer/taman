@@ -11,7 +11,7 @@ use crate::app::App;
 
 pub fn draw_plant(f: &mut Frame, app: &App, area: Rect) {
     let block = Block::default()
-        .title(Title::from(Line::from(format!(" Plant {} {} ", app.plant.stage.icon(), format!("{:?}", app.plant.stage).to_lowercase())).style(Style::default().fg(app.theme.blocks))).alignment(Alignment::Center))
+        .title_top(Line::from(format!(" Plant {} {} ", app.plant.stage.icon(), format!("{:?}", app.plant.stage).to_lowercase())).style(Style::default().fg(app.theme.blocks)))
         .borders(Borders::ALL)
         .style(Style::default().fg(app.theme.blocks));
     f.render_widget(block, area);
