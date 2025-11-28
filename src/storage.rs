@@ -1,7 +1,15 @@
 use chrono::{DateTime, Local, Utc, NaiveDate};
+use crate::timer::SessionType;
 use serde::{Deserialize, Serialize};
 use std::fs;
 use std::path::PathBuf;
+
+#[derive(Serialize, Deserialize, Debug, Clone)]
+pub struct SessionLog {
+    pub session_type: SessionType,
+    pub duration: u64,
+    pub end_time: DateTime<Local>,
+}
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Settings {
@@ -37,6 +45,7 @@ pub struct Statistics {
     pub longest_streak_end_date: Option<DateTime<chrono::Utc>>,
     pub current_streak_dates: Vec<chrono::NaiveDate>,
     pub longest_streak_dates: Vec<chrono::NaiveDate>,
+    pub session_log: Vec<SessionLog>,
     pub recent_sessions: Vec<(DateTime<Local>, u32)>, // (date, count) for daily totals
     pub recent_focus_sessions: Vec<(DateTime<Local>, u32)>,
     pub recent_break_sessions: Vec<(DateTime<Local>, u32)>,
@@ -62,6 +71,7 @@ impl Default for Statistics {
             longest_streak_end_date: None,
             current_streak_dates: vec![],
             longest_streak_dates: vec![],
+            session_log: vec![],
             recent_sessions: vec![],
             recent_focus_sessions: vec![],
             recent_break_sessions: vec![],

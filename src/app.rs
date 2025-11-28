@@ -141,6 +141,14 @@ impl App {
                 }
             }
             self.garden.update_streaks(&self.statistics.recent_sessions);
+            self.statistics.session_log.push(crate::storage::SessionLog {
+                session_type: self.timer.session_type,
+                duration: minutes,
+                end_time: Local::now(),
+            });
+            if self.statistics.session_log.len() > 100 {
+                self.statistics.session_log.remove(0);
+            }
             // Auto run next
             if let Some(idx) = self.timer.auto_run_index {
                 if idx + 1 < self.timer.auto_run.len() {

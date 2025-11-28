@@ -80,16 +80,39 @@ pub fn draw_stats(f: &mut Frame, app: &App, area: Rect) {
         0 => format!("Focus: {}, Break: {}", app.statistics.total_focus_sessions, app.statistics.total_break_sessions),
         1 => format!("Focused: {}, Break: {}", app.statistics.total_focus_minutes, app.statistics.total_break_minutes),
         2 => {
-            if app.statistics.recent_sessions.is_empty() {
-                "No session data".to_string()
-            } else {
-                format!("Session distribution: {:?}", app.statistics.recent_sessions)
-            }
+            let logs = app.statistics.session_log.iter().rev().filter(|l| matches!(l.session_type, crate::timer::SessionType::Focus)).take(10).map(|l| format!("Focus session - {} mins - {}", l.duration, l.end_time.format("%Y-%m-%dT%H:%M:%S%.6f%z"))).collect::<Vec<_>>().join("\n");
+            if logs.is_empty() { "No focus sessions".to_string() } else { logs }
         }
-        3 => "Minutes focused distribution: N/A".to_string(),
-        4 => "Break sessions distribution: N/A".to_string(),
-        5 => "Minutes resting distribution: N/A".to_string(),
-        6 => "Grown plants distribution: N/A".to_string(),
+        3 => {
+            let logs = app.statistics.session_log.iter().rev().filter(|l| matches!(l.session_type, crate::timer::SessionType::Focus)).take(10).map(|l| format!("Focus session - {} mins - {}", l.duration, l.end_time.format("%Y-%m-%dT%H:%M:%S%.6f%z"))).collect::<Vec<_>>().join("\n");
+            if logs.is_empty() { "No focus sessions".to_string() } else { logs }
+        }
+        4 => {
+            let logs = app.statistics.session_log.iter().rev().filter(|l| matches!(l.session_type, crate::timer::SessionType::ShortBreak | crate::timer::SessionType::LongBreak)).take(10).map(|l| {
+                let name = match l.session_type {
+                    crate::timer::SessionType::ShortBreak => "Short break",
+                    crate::timer::SessionType::LongBreak => "Long break",
+                    _ => "Break",
+                };
+                format!("{} - {} mins - {}", name, l.duration, l.end_time.format("%Y-%m-%dT%H:%M:%S%.6f%z"))
+            }).collect::<Vec<_>>().join("\n");
+            if logs.is_empty() { "No break sessions".to_string() } else { logs }
+        }
+        5 => {
+            let logs = app.statistics.session_log.iter().rev().filter(|l| matches!(l.session_type, crate::timer::SessionType::ShortBreak | crate::timer::SessionType::LongBreak)).take(10).map(|l| {
+                let name = match l.session_type {
+                    crate::timer::SessionType::ShortBreak => "Short break",
+                    crate::timer::SessionType::LongBreak => "Long break",
+                    _ => "Break",
+                };
+                format!("{} - {} mins - {}", name, l.duration, l.end_time.format("%Y-%m-%dT%H:%M:%S%.6f%z"))
+            }).collect::<Vec<_>>().join("\n");
+            if logs.is_empty() { "No break sessions".to_string() } else { logs }
+        }
+        6 => {
+            let logs = app.garden.completed_plants.iter().rev().take(10).map(|p| format!("Grown plant - {} - {}", p.plant.stage, p.completed_at.with_timezone(&Local).format("%Y-%m-%dT%H:%M:%S%.6f%z"))).collect::<Vec<_>>().join("\n");
+            if logs.is_empty() { "No grown plants".to_string() } else { logs }
+        }
         7 => {
             let dates = app.garden.current_streak_dates.iter().map(|d| d.format("%Y-%m-%d").to_string()).collect::<Vec<_>>().join("\n");
             format!("Streak Dates:\n{}", dates)

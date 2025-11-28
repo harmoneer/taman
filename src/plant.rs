@@ -8,6 +8,12 @@ pub enum PlantStage {
     MiniTree,
 }
 
+impl std::fmt::Display for PlantStage {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        write!(f, "{:?}", self)
+    }
+}
+
 impl PlantStage {
     pub fn from_u32(stage: u32) -> Self {
         match stage {
