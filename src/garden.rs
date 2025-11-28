@@ -14,7 +14,6 @@ pub struct Garden {
     pub longest_streak: u32,
     pub current_streak_start_date: Option<DateTime<Utc>>,
     pub longest_streak_end_date: Option<DateTime<Utc>>,
-    pub last_session_date: Option<DateTime<Utc>>,
     pub current_streak_dates: Vec<NaiveDate>,
     pub longest_streak_dates: Vec<NaiveDate>,
 }
@@ -27,7 +26,6 @@ impl Garden {
             longest_streak: 0,
             current_streak_start_date: None,
             longest_streak_end_date: None,
-            last_session_date: None,
             current_streak_dates: vec![],
             longest_streak_dates: vec![],
         }
@@ -41,9 +39,7 @@ impl Garden {
         self.completed_plants.push(completed);
     }
 
-    pub fn reset_streak(&mut self) {
-        self.current_streak = 0;
-    }
+
 
     pub fn total_completed(&self) -> usize {
         self.completed_plants.len()

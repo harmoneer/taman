@@ -43,10 +43,6 @@ impl PlantStage {
         }
     }
 
-    pub fn max_stage() -> u32 {
-        4
-    }
-
 
 
     pub fn icon(&self) -> &'static str {
@@ -103,9 +99,7 @@ impl Plant {
         self.growth_points >= 10
     }
 
-    pub fn progress(&self) -> f64 {
-        self.growth_points as f64 / 10.0
-    }
+
 
     pub fn sessions_to_next_stage(&self) -> u32 {
         match self.growth_points {

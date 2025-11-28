@@ -1,18 +1,15 @@
 use ratatui::{
     layout::{Alignment, Constraint, Direction, Layout, Rect},
-    style::{Color, Modifier, Style, Stylize},
+    style::{Modifier, Style},
     text::Line,
-    widgets::{block::Title, Bar, BarChart, BarGroup, Block, Borders, Chart, Dataset, GraphType, List, ListItem, Padding, Paragraph, Widget},
+    widgets::{Bar, BarChart, BarGroup, Block, Borders, List, ListItem, Padding, Paragraph},
     Frame,
 };
 use tui_piechart::{PieChart, PieSlice, symbols};
 use std::env;
 
 use crate::app::App;
-use crate::storage::Data;
 use chrono::{DateTime, Local};
-use ratatui::text::Span;
-use std::cmp::Reverse;
 use tui_big_text::{BigText, PixelSize};
 
 pub fn draw_stats(f: &mut Frame, app: &App, area: Rect) {
@@ -153,21 +150,6 @@ pub fn draw_stats(f: &mut Frame, app: &App, area: Rect) {
                 data.push((today, 0));
             }
             data.sort_by_key(|(d, _)| d.date_naive());
-            let chart_data: Vec<(f64, f64)> = data.iter().enumerate().map(|(i, (_, v))| (i as f64, *v as f64)).collect();
-            let x_labels = if data.len() >= 3 {
-                vec![
-                    Span::styled(data.last().unwrap().0.format(date_format).to_string(), Style::default().add_modifier(Modifier::BOLD)),
-                    Span::raw(data[data.len() / 2].0.format(date_format).to_string()),
-                    Span::styled(data[0].0.format(date_format).to_string(), Style::default().add_modifier(Modifier::BOLD)),
-                ]
-            } else if data.len() == 2 {
-                vec![
-                    Span::styled(data[1].0.format(date_format).to_string(), Style::default().add_modifier(Modifier::BOLD)),
-                    Span::styled(data[0].0.format(date_format).to_string(), Style::default().add_modifier(Modifier::BOLD)),
-                ]
-            } else {
-                vec![Span::styled(data[0].0.format(date_format).to_string(), Style::default().add_modifier(Modifier::BOLD))]
-            };
             let max_val = data.iter().map(|(_, v)| *v as u64).max().unwrap_or(0);
             let max_y = ((max_val as f64 / 10.0).ceil() * 10.0) as u64;
             let bars: Vec<Bar> = data.iter().map(|(date, value)| {

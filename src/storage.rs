@@ -111,7 +111,7 @@ impl Default for Data {
 
 pub fn get_data_path() -> PathBuf {
     let mut path = dirs::config_dir().unwrap_or_else(|| PathBuf::from("."));
-    path.push("focus-garden");
+    path.push("taman");
     fs::create_dir_all(&path).unwrap();
     path.push("data.json");
     path

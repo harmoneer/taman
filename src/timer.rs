@@ -76,9 +76,7 @@ impl Timer {
         self.last_tick = None;
     }
 
-    pub fn reset(&mut self) {
-        self.stop();
-    }
+
 
     pub fn set_session(&mut self, session_type: SessionType, settings: &crate::storage::Settings) {
         self.session_type = session_type;
@@ -121,16 +119,5 @@ impl Timer {
         self.auto_run.push(session);
     }
 
-    pub fn remove_from_auto_run(&mut self, index: usize) {
-        if index < self.auto_run.len() {
-            self.auto_run.remove(index);
-        }
-    }
 
-    pub fn next_auto_run(&mut self, settings: &crate::storage::Settings) {
-        if let Some(next) = self.auto_run.first().cloned() {
-            self.set_session(next, settings);
-            self.auto_run.remove(0);
-        }
-    }
 }
