@@ -1,6 +1,6 @@
 # 🌱 Focus Garden Devlog #2 — From Concepts to Working Prototype
 
-Welcome back to **Focus Garden**, the Rust TUI Pomodoro app where your focus sessions literally grow plants! In [Devlog #1](first.md), we laid out the architecture, UI concepts, emoji plant design, and early stats ideas. Now, just a short time later, we're excited to share how those concepts have evolved into a fully functional prototype.
+Welcome back to **Focus Garden**, the Rust TUI Pomodoro app where your focus sessions literally grow plants! In [Devlog #1](https://plok.sh/harmoneer/focus-garden/first), we laid out the architecture, UI concepts, emoji plant design, and early stats ideas. Now, just a short time later, we're excited to share how those concepts have evolved into a fully functional prototype.
 
 This devlog covers the implementation of real charts, polished navigation, scrollbar fixes, and the transition from "idea" to "usable app." Let's see how we've grown since the seed stage!
 
