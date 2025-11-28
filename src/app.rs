@@ -50,6 +50,11 @@ impl App {
         garden.completed_plants = vec![]; // TODO: load from data if needed
         garden.current_streak = data.statistics.current_streak;
         garden.longest_streak = data.statistics.longest_streak;
+        garden.current_streak_start_date = data.statistics.current_streak_start_date;
+        garden.longest_streak_end_date = data.statistics.longest_streak_end_date;
+        garden.current_streak_dates = data.statistics.current_streak_dates.clone();
+        garden.longest_streak_dates = data.statistics.longest_streak_dates.clone();
+        garden.update_streaks(&data.statistics.recent_sessions);
         let statistics = data.statistics;
         let theme = Theme::new(settings.theme);
 
@@ -135,6 +140,7 @@ impl App {
                     self.statistics.recent_plants.push((today, 1));
                 }
             }
+            self.garden.update_streaks(&self.statistics.recent_sessions);
             // Auto run next
             if let Some(idx) = self.timer.auto_run_index {
                 if idx + 1 < self.timer.auto_run.len() {
@@ -337,11 +343,18 @@ impl App {
     }
 
     pub fn save(&self) {
+        let mut statistics = self.statistics.clone();
+        statistics.current_streak = self.garden.current_streak;
+        statistics.longest_streak = self.garden.longest_streak;
+        statistics.current_streak_start_date = self.garden.current_streak_start_date;
+        statistics.longest_streak_end_date = self.garden.longest_streak_end_date;
+        statistics.current_streak_dates = self.garden.current_streak_dates.clone();
+        statistics.longest_streak_dates = self.garden.longest_streak_dates.clone();
         let data = Data {
             current_plant_stage: self.plant.stage.to_u32(),
             growth_points: self.plant.growth_points.clone(),
             settings: self.settings.clone(),
-            statistics: self.statistics.clone(),
+            statistics,
             auto_run: self.timer.auto_run.clone(),
             auto_run_index: self.timer.auto_run_index,
         };

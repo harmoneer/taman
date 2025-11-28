@@ -1,4 +1,4 @@
-use chrono::{DateTime, Local};
+use chrono::{DateTime, Local, Utc, NaiveDate};
 use serde::{Deserialize, Serialize};
 use std::fs;
 use std::path::PathBuf;
@@ -33,6 +33,10 @@ pub struct Statistics {
     pub completed_plants: u32,
     pub current_streak: u32,
     pub longest_streak: u32,
+    pub current_streak_start_date: Option<DateTime<chrono::Utc>>,
+    pub longest_streak_end_date: Option<DateTime<chrono::Utc>>,
+    pub current_streak_dates: Vec<chrono::NaiveDate>,
+    pub longest_streak_dates: Vec<chrono::NaiveDate>,
     pub recent_sessions: Vec<(DateTime<Local>, u32)>, // (date, count) for daily totals
     pub recent_focus_sessions: Vec<(DateTime<Local>, u32)>,
     pub recent_break_sessions: Vec<(DateTime<Local>, u32)>,
@@ -54,6 +58,10 @@ impl Default for Statistics {
             completed_plants: 0,
             current_streak: 0,
             longest_streak: 0,
+            current_streak_start_date: None,
+            longest_streak_end_date: None,
+            current_streak_dates: vec![],
+            longest_streak_dates: vec![],
             recent_sessions: vec![],
             recent_focus_sessions: vec![],
             recent_break_sessions: vec![],

@@ -39,15 +39,23 @@ pub fn draw_stats(f: &mut Frame, app: &App, area: Rect) {
         .constraints([Constraint::Min(10), Constraint::Min(5)])
         .split(chunks[0]);
 
+    let today = Local::now().date_naive();
+    let todays_sessions = app.statistics.recent_sessions.iter().find(|(d, _)| d.date_naive() == today).map(|(_, c)| *c).unwrap_or(0);
+    let todays_minutes = app.statistics.recent_minutes.iter().find(|(d, _)| d.date_naive() == today).map(|(_, m)| *m).unwrap_or(0);
+    let todays_focus_sessions = app.statistics.recent_focus_sessions.iter().find(|(d, _)| d.date_naive() == today).map(|(_, c)| *c).unwrap_or(0);
+    let todays_focus_minutes = app.statistics.recent_focus_minutes.iter().find(|(d, _)| d.date_naive() == today).map(|(_, m)| *m).unwrap_or(0);
+    let todays_break_sessions = app.statistics.recent_break_sessions.iter().find(|(d, _)| d.date_naive() == today).map(|(_, c)| *c).unwrap_or(0);
+    let todays_break_minutes = app.statistics.recent_break_minutes.iter().find(|(d, _)| d.date_naive() == today).map(|(_, m)| *m).unwrap_or(0);
+    let todays_plants = app.statistics.recent_plants.iter().find(|(d, _)| d.date_naive() == today).map(|(_, c)| *c).unwrap_or(0);
     let categories = vec![
-        format!("Sessions: {}", app.statistics.total_sessions),
-        format!("Minutes: {}", app.statistics.total_minutes),
-        format!("Focus Sessions: {}", app.statistics.total_focus_sessions),
-        format!("Minutes Focused: {}", app.statistics.total_focus_minutes),
-        format!("Break Sessions: {}", app.statistics.total_break_sessions),
-        format!("Minutes Resting: {}", app.statistics.total_break_minutes),
-        format!("Grown Plants: {}", app.statistics.completed_plants),
-        format!("Current Streak: {}", if app.garden.current_streak == 0 { 1 } else { app.garden.current_streak }),
+        format!("Sessions: {}", todays_sessions),
+        format!("Minutes: {}", todays_minutes),
+        format!("Focus Sessions: {}", todays_focus_sessions),
+        format!("Minutes Focused: {}", todays_focus_minutes),
+        format!("Break Sessions: {}", todays_break_sessions),
+        format!("Minutes Resting: {}", todays_break_minutes),
+        format!("Grown Plants: {}", todays_plants),
+        format!("Current Streak: {}", app.garden.current_streak),
         format!("Longest Streak: {}", app.garden.longest_streak),
     ];
     let items: Vec<ListItem> = categories
@@ -132,7 +140,7 @@ pub fn draw_stats(f: &mut Frame, app: &App, area: Rect) {
                     .style(Style::default().fg(app.theme.foam))
             }).collect();
             let barchart = BarChart::default()
-                .block(Block::default().title(Line::from(" Total Sessions ").style(Style::default().fg(app.theme.blocks))).borders(Borders::ALL).style(Style::default().fg(app.theme.blocks)).padding(Padding::new(1, 0, 0, 0)))
+                .block(Block::default().title(Line::from(format!(" Total Sessions: {} ", app.statistics.total_sessions)).style(Style::default().fg(app.theme.blocks))).borders(Borders::ALL).style(Style::default().fg(app.theme.blocks)).padding(Padding::new(1, 0, 0, 0)))
                 .data(BarGroup::default().bars(&bars))
                 .bar_width(5)
                 .bar_gap(1)
@@ -152,7 +160,7 @@ pub fn draw_stats(f: &mut Frame, app: &App, area: Rect) {
                     .value_style(Style::default().fg(app.theme.love).bg(app.theme.rose))
             }).collect();
             let barchart = BarChart::default()
-                .block(Block::default().title(Line::from(" Total Minutes ").style(Style::default().fg(app.theme.blocks))).borders(Borders::ALL).style(Style::default().fg(app.theme.blocks)).padding(Padding::new(1, 0, 1, 0)))
+                .block(Block::default().title(Line::from(format!(" Total Minutes: {} ", app.statistics.total_minutes)).style(Style::default().fg(app.theme.blocks))).borders(Borders::ALL).style(Style::default().fg(app.theme.blocks)).padding(Padding::new(1, 0, 1, 0)))
                 .data(BarGroup::default().bars(&bars))
                 .bar_width(1)
                 .bar_gap(0)
@@ -174,7 +182,7 @@ pub fn draw_stats(f: &mut Frame, app: &App, area: Rect) {
                     .style(Style::default().fg(app.theme.foam))
             }).collect();
             let barchart = BarChart::default()
-                .block(Block::default().title(Line::from(" Total Focus Sessions ").style(Style::default().fg(app.theme.blocks))).borders(Borders::ALL).style(Style::default().fg(app.theme.blocks)).padding(Padding::new(1, 0, 0, 0)))
+                .block(Block::default().title(Line::from(format!(" Total Focus Sessions: {} ", app.statistics.total_focus_sessions)).style(Style::default().fg(app.theme.blocks))).borders(Borders::ALL).style(Style::default().fg(app.theme.blocks)).padding(Padding::new(1, 0, 0, 0)))
                 .data(BarGroup::default().bars(&bars))
                 .bar_width(5)
                 .bar_gap(1)
@@ -194,7 +202,7 @@ pub fn draw_stats(f: &mut Frame, app: &App, area: Rect) {
                     .value_style(Style::default().fg(app.theme.love).bg(app.theme.rose))
             }).collect();
             let barchart = BarChart::default()
-                .block(Block::default().title(Line::from(" Total Minutes Focused ").style(Style::default().fg(app.theme.blocks))).borders(Borders::ALL).style(Style::default().fg(app.theme.blocks)).padding(Padding::new(1, 0, 1, 0)))
+                .block(Block::default().title(Line::from(format!(" Total Minutes Focused: {} ", app.statistics.total_focus_minutes)).style(Style::default().fg(app.theme.blocks))).borders(Borders::ALL).style(Style::default().fg(app.theme.blocks)).padding(Padding::new(1, 0, 1, 0)))
                 .data(BarGroup::default().bars(&bars))
                 .bar_width(1)
                 .bar_gap(0)
@@ -216,7 +224,7 @@ pub fn draw_stats(f: &mut Frame, app: &App, area: Rect) {
                     .style(Style::default().fg(app.theme.foam))
             }).collect();
             let barchart = BarChart::default()
-                .block(Block::default().title(Line::from(" Total Break Sessions ").style(Style::default().fg(app.theme.blocks))).borders(Borders::ALL).style(Style::default().fg(app.theme.blocks)).padding(Padding::new(1, 0, 0, 0)))
+                .block(Block::default().title(Line::from(format!(" Total Break Sessions: {} ", app.statistics.total_break_sessions)).style(Style::default().fg(app.theme.blocks))).borders(Borders::ALL).style(Style::default().fg(app.theme.blocks)).padding(Padding::new(1, 0, 0, 0)))
                 .data(BarGroup::default().bars(&bars))
                 .bar_width(5)
                 .bar_gap(1)
@@ -236,7 +244,7 @@ pub fn draw_stats(f: &mut Frame, app: &App, area: Rect) {
                     .value_style(Style::default().fg(app.theme.love).bg(app.theme.rose))
             }).collect();
             let barchart = BarChart::default()
-                .block(Block::default().title(Line::from(" Total Minutes Resting ").style(Style::default().fg(app.theme.blocks))).borders(Borders::ALL).style(Style::default().fg(app.theme.blocks)).padding(Padding::new(1, 0, 1, 0)))
+                .block(Block::default().title(Line::from(format!(" Total Minutes Resting: {} ", app.statistics.total_break_minutes)).style(Style::default().fg(app.theme.blocks))).borders(Borders::ALL).style(Style::default().fg(app.theme.blocks)).padding(Padding::new(1, 0, 1, 0)))
                 .data(BarGroup::default().bars(&bars))
                 .bar_width(1)
                 .bar_gap(0)
@@ -258,7 +266,7 @@ pub fn draw_stats(f: &mut Frame, app: &App, area: Rect) {
                     .style(Style::default().fg(app.theme.foam))
             }).collect();
             let barchart = BarChart::default()
-                .block(Block::default().title(Line::from(" Total Grown Plants ").style(Style::default().fg(app.theme.blocks))).borders(Borders::ALL).style(Style::default().fg(app.theme.blocks)).padding(Padding::new(1, 0, 0, 0)))
+                .block(Block::default().title(Line::from(format!(" Total Grown Plants: {} ", app.statistics.completed_plants)).style(Style::default().fg(app.theme.blocks))).borders(Borders::ALL).style(Style::default().fg(app.theme.blocks)).padding(Padding::new(1, 0, 0, 0)))
                 .data(BarGroup::default().bars(&bars))
                 .bar_width(5)
                 .bar_gap(1)
@@ -272,7 +280,7 @@ pub fn draw_stats(f: &mut Frame, app: &App, area: Rect) {
             } else {
                 app.garden.current_streak_start_date.map(|d| d.with_timezone(&Local).format("%d %b %Y").to_string()).unwrap_or("N/A".to_string())
             };
-            let display_streak = if app.garden.current_streak == 0 { 1 } else { app.garden.current_streak };
+            let display_streak = app.garden.current_streak;
             let big_streak = BigText::builder()
                 .lines(vec![Line::from(format!("{:^3}", display_streak.to_string()))])
                 .pixel_size(PixelSize::Quadrant)
