@@ -90,5 +90,4 @@ MIT License
 
 ---
 
-🌿 Grow your focus, grow your garden.</content>
-<parameter name="filePath">README.md
+🌿 Grow your focus, grow your garden.
