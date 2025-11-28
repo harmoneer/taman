@@ -1,6 +1,6 @@
-# 🌱 Focus Garden Devlog #2 — From Concepts to Working Prototype
+# 🌱 Taman Devlog #2 — From Concepts to Working Prototype
 
-Welcome back to **Focus Garden**, the Rust TUI Pomodoro app where your focus sessions literally grow plants! In [Devlog #1](https://plok.sh/harmoneer/focus-garden/first), we laid out the architecture, UI concepts, emoji plant design, and early stats ideas. Now, just a short time later, we're excited to share how those concepts have evolved into a fully functional prototype.
+Welcome back to **Taman**, the Rust TUI Pomodoro app where your focus sessions literally grow plants! In [Devlog #1](first.md), we laid out the architecture, UI concepts, emoji plant design, and early stats ideas. Now, just a short time later, we're excited to share how those concepts have evolved into a fully functional prototype.
 
 This devlog covers the implementation of real charts, polished navigation, scrollbar fixes, and the transition from "idea" to "usable app." Let's see how we've grown since the seed stage!
 
@@ -21,7 +21,7 @@ This devlog covers the implementation of real charts, polished navigation, scrol
 
 ## 🌻 Current Progress: Prototype Complete
 
-Since Devlog #1, we've implemented nearly all planned features, transforming Focus Garden from a concept into a working TUI app. The app is built in Rust using:
+Since Devlog #1, we've implemented nearly all planned features, transforming Taman from a concept into a working TUI app. The app is built in Rust using:
 
 - **ratatui** for core TUI widgets (BarChart, List, Scrollbar, etc.)
 - **tui-big-text** for large timer and streak displays
@@ -143,7 +143,7 @@ With the prototype complete, our next milestone is:
 
 ## 🌻 Closing Thoughts
 
-Focus Garden has grown from a collection of ideas into a working Pomodoro app with real charts, themes, and plant growth! The emoji plant concept works beautifully — simple, cross-terminal compatible, and genuinely motivating.
+Taman has grown from a collection of ideas into a working Pomodoro app with real charts, themes, and plant growth! The emoji plant concept works beautifully — simple, cross-terminal compatible, and genuinely motivating.
 
 Devlog #1 set the vision; this one shows the execution. We're excited to share this with the Rust/TUI community soon. If you're building TUIs or productivity tools, we'd love to hear your thoughts!
 

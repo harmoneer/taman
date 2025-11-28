@@ -1,14 +1,14 @@
-# 🌱 Focus Garden Devlog #1 — Plant-Powered Pomodoro in Your Terminal
+# 🌱 Taman Devlog #1 — Plant-Powered Pomodoro in Your Terminal
 
-Welcome to the very first development log of **Focus Garden**, a Rust-powered TUI Pomodoro app where **your productivity grows plants** — literally! The idea is simple: every time you complete a focus session, your little plant evolves from a 🌰 seed into a 🌳 mini tree.
+Welcome to the very first development log of **Taman**, a Rust-powered TUI Pomodoro app where **your productivity grows plants** — literally! The idea is simple: every time you complete a focus session, your little plant evolves from a 🌰 seed into a 🌳 mini tree.
 
 This devlog documents the early building blocks of the project: architecture decisions, UI concepts using Ratatui, the swap from ASCII art to emoji plants, and the direction for charts and statistics.  
 
 ---
 
-## 🌿 What Is Focus Garden?
+## 🌿 What Is Taman?
 
-Focus Garden is a **terminal-based productivity app** built in Rust using:
+Taman is a **terminal-based productivity app** built in Rust using:
 
 - **ratatui** for the TUI widgets  
 - **crossterm** for terminal backend + input  
@@ -17,17 +17,17 @@ Focus Garden is a **terminal-based productivity app** built in Rust using:
 
 It’s designed to be:
 
-- ✨ **cute** (plants grow!)  
-- 🧭 **navigable by keyboard** only  
-- 🎨 **theme-aware** (System / Rose Pine Light / Rose Pine Dark)  
-- 📈 **stats-rich**, including charts  
+- ✨ **cute** (plants grow!)
+- 🧭 **navigable by keyboard** only
+- 🎨 **theme-aware** (System / Rose Pine Light / Rose Pine Dark)
+- 📈 **stats-rich**, including charts
 - 🪴 **game-ified**, but without distractions  
 
 ---
 
 ## 🌻 The Core Loop: Grow a Plant by Focusing
 
-Instead of coins, XP, or badges, Focus Garden grows a **single plant at a time**.
+Instead of coins, XP, or badges, Taman grows a **single plant at a time**.
 
 Plant lifecycle:
 
@@ -187,5 +187,5 @@ Much cleaner. Much happier.
 - Packaging & publishing to crates.io
 
 # 🌻 Closing Thoughts
-This first devlog sets the foundation for Focus Garden — the architecture, UI ideas, emoji plant design, and how stats will work. The next entries will focus on implementing real charts, animations, and saving/loading reliable daily metrics.
+This first devlog sets the foundation for Taman — the architecture, UI ideas, emoji plant design, and how stats will work. The next entries will focus on implementing real charts, animations, and saving/loading reliable daily metrics.
 🌿 Grow your focus, grow your garden.
