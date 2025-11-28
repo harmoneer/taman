@@ -14,8 +14,8 @@
 - **Streak Tracking**: Current and longest daily streaks
 
 ## Screenshots
-
-*(Add screenshots here when available)*
+(https://github.com/harmoneer/taman/blob/master/screenshots/1.%20Timer%20Page.png?raw=true)
+(https://github.com/harmoneer/taman/blob/master/screenshots/2.%20Plant%20Page.png)
 
 ## Installation
 
