@@ -4,7 +4,7 @@ Welcome back to **Taman**, the Rust TUI Pomodoro app where your focus sessions l
 
 This devlog covers the packaging process, release preparations, and our plans for the future. Plus, if you enjoy Taman, consider supporting us with a coffee!
 
-[![Buy Me a Coffee at ko-fi.com](https://storage.ko-fi.com/cdn/kofi4.png?v=6)](https://ko-fi.com/A0A81PC8ZA)
+[![Buy Me a Coffee at ko-fi.com](https://plok.sh/kofi.png)](https://ko-fi.com/A0A81PC8ZA)
 
 ---
 
