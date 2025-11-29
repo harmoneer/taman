@@ -4,8 +4,6 @@
 
 [![Taman Features](https://github.com/harmoneer/taman/blob/master/screenshots/taman.gif?raw=true)]
 
-[![Buy Me a Coffee at ko-fi.com](https://storage.ko-fi.com/cdn/kofi4.png?v=6)](https://ko-fi.com/A0A81PC8ZA)
-
 ## Features
 
 - **Pomodoro Timer**: Configurable focus, short break, and long break durations
@@ -16,6 +14,8 @@
 - **Persistence**: JSON-based saving of progress, stats, and settings
 - **Keyboard Navigation**: Fully navigable with keyboard only
 - **Streak Tracking**: Current and longest daily streaks
+
+[![Buy Me a Coffee at ko-fi.com](https://storage.ko-fi.com/cdn/kofi4.png?v=6)](https://ko-fi.com/A0A81PC8ZA)
 
 ## Installation
 
@@ -90,10 +90,10 @@ MIT License
 - [Devlog #3](blog/third.md) - Crates.io release and community launch
 
 ## More screenshots
-[![Timer Page](https://github.com/harmoneer/taman/blob/master/screenshots/1.%20Timer%20Page.png?raw=true)]
-[![Plant Page](https://github.com/harmoneer/taman/blob/master/screenshots/2.%20Plant%20Page.png?raw=true)]
-[![Stats Page](https://github.com/harmoneer/taman/blob/master/screenshots/3.%20Stats%20Page.png?raw=true)]
-[![Settings Page](https://github.com/harmoneer/taman/blob/master/screenshots/4.%20Settings%20Page.png?raw=true)]
+![Timer Page](https://github.com/harmoneer/taman/blob/master/screenshots/1.%20Timer%20Page.png?raw=true)
+![Plant Page](https://github.com/harmoneer/taman/blob/master/screenshots/2.%20Plant%20Page.png?raw=true)
+![Stats Page](https://github.com/harmoneer/taman/blob/master/screenshots/3.%20Stats%20Page.png?raw=true)
+![Settings Page](https://github.com/harmoneer/taman/blob/master/screenshots/4.%20Settings%20Page.png?raw=true)
 
 ---
 
