@@ -2,7 +2,9 @@
 
 🌱 **Taman** is a TUI Pomodoro productivity app where your focus sessions literally grow plants! Built in Rust with Ratatui, it combines the Pomodoro technique with gamification — complete focus sessions to evolve your plant from a 🌰 seed to a 🪴 fully grown plant - all in your terminal!
 
-<a href='https://ko-fi.com/A0A81PC8ZA' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://storage.ko-fi.com/cdn/kofi4.png?v=6' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
+[![Taman Features](https://github.com/harmoneer/taman/blob/master/screenshots/taman.gif?raw=true)]
+
+[![Buy Me a Coffee at ko-fi.com](https://storage.ko-fi.com/cdn/kofi4.png?v=6)](https://ko-fi.com/A0A81PC8ZA)
 
 ## Features
 
@@ -14,12 +16,6 @@
 - **Persistence**: JSON-based saving of progress, stats, and settings
 - **Keyboard Navigation**: Fully navigable with keyboard only
 - **Streak Tracking**: Current and longest daily streaks
-
-## Screenshots
-![Timer Page](https://github.com/harmoneer/taman/blob/master/screenshots/1.%20Timer%20Page.png?raw=true)
-![Plant Page](https://github.com/harmoneer/taman/blob/master/screenshots/2.%20Plant%20Page.png)
-![Stats Page](https://github.com/harmoneer/taman/blob/2bf27ba6a05787d4e0c4c3b1d4d79ff502a48011/screenshots/3.%20Stats%20Page.png)
-![Settings Page](https://github.com/harmoneer/taman/blob/2bf27ba6a05787d4e0c4c3b1d4d79ff502a48011/screenshots/4.%20Settings%20Page.png)
 
 ## Installation
 
@@ -92,6 +88,12 @@ MIT License
 - [Devlog #1](blog/first.md) - Initial concepts and architecture
 - [Devlog #2](blog/second.md) - Implementation progress to working prototype
 - [Devlog #3](blog/third.md) - Crates.io release and community launch
+
+## More screenshots
+[![Timer Page](https://github.com/harmoneer/taman/blob/master/screenshots/1.%20Timer%20Page.png?raw=true)]
+[![Plant Page](https://github.com/harmoneer/taman/blob/master/screenshots/2.%20Plant%20Page.png?raw=true)]
+[![Stats Page](https://github.com/harmoneer/taman/blob/master/screenshots/3.%20Stats%20Page.png?raw=true)]
+[![Settings Page](https://github.com/harmoneer/taman/blob/master/screenshots/4.%20Settings%20Page.png?raw=true)]
 
 ---
 
