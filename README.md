@@ -91,6 +91,7 @@ MIT License
 
 - [Devlog #1](blog/first.md) - Initial concepts and architecture
 - [Devlog #2](blog/second.md) - Implementation progress to working prototype
+- [Devlog #3](blog/third.md) - Crates.io release and community launch
 
 ---
 
