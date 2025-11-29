@@ -2,9 +2,10 @@
 
 🌱 **Taman** is a TUI Pomodoro productivity app where your focus sessions literally grow plants! Built in Rust with Ratatui, it combines the Pomodoro technique with gamification — complete focus sessions to evolve your plant from a 🌰 seed to a 🪴 fully grown plant - all in your terminal!
 
-[![Taman Features](https://github.com/harmoneer/taman/blob/master/screenshots/taman.gif?raw=true)]
+[![Buy Me a Coffee at ko-fi.com](https://plok.sh/kofi.png)](https://ko-fi.com/A0A81PC8ZA)
 
 ## Features
+[![Taman Features](https://github.com/harmoneer/taman/blob/master/screenshots/taman.gif?raw=true)]
 
 - **Pomodoro Timer**: Configurable focus, short break, and long break durations
 - **Plant Growth**: Emoji-based plants that grow with each completed session
@@ -14,8 +15,6 @@
 - **Persistence**: JSON-based saving of progress, stats, and settings
 - **Keyboard Navigation**: Fully navigable with keyboard only
 - **Streak Tracking**: Current and longest daily streaks
-
-[![Buy Me a Coffee at ko-fi.com](https://storage.ko-fi.com/cdn/kofi4.png?v=6)](https://ko-fi.com/A0A81PC8ZA)
 
 ## Installation
 
