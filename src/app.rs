@@ -348,7 +348,7 @@ impl App {
                 }
             }
             3 => { // Theme
-                let themes = [ThemeVariant::System, ThemeVariant::RosePineLight, ThemeVariant::RosePineDark];
+                let themes = [ThemeVariant::System, ThemeVariant::RosePineDawn, ThemeVariant::RosePine, ThemeVariant::GruvboxDark, ThemeVariant::GruvboxLight, ThemeVariant::SolarizedDark, ThemeVariant::SolarizedLight, ThemeVariant::Nord, ThemeVariant::TokyoNight, ThemeVariant::Monokai, ThemeVariant::Vesper, ThemeVariant::Everforest, ThemeVariant::CatppuccinLatte, ThemeVariant::CatppuccinFrappe, ThemeVariant::CatppuccinMacchiato, ThemeVariant::CatppuccinMocha];
                 let current = themes.iter().position(|&t| t == self.settings.theme).unwrap_or(0);
                 let new_index = (current as i64 - delta).rem_euclid(themes.len() as i64) as usize;
                 self.settings.theme = themes[new_index];

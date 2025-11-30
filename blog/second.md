@@ -14,7 +14,7 @@ This devlog covers the implementation of real charts, polished navigation, scrol
 - **Stats Tab**: Daily metrics with multiple chart types (sparkline, bar, line, pie)
 - **Settings Tab**: Adjustable durations and theme selection
 - **Persistence**: JSON-based saving/loading
-- **Themes**: System, Rose Pine Light/Dark
+- **Themes**: System, Rose Pine Dawn/Rose Pine, Gruvbox Dark/Light, Solarized Dark/Light, Nord, Tokyo Night, Monokai, Vesper, Everforest, Catppuccin Latte/Frappé/Macchiato/Mocha
 - **Next Steps**: Real charts, pie charts, garden history, navigation polish, packaging
 
 ---
@@ -61,7 +61,7 @@ Charts are now fully functional using Ratatui's BarChart and the third-party tui
 
 ### ⚙️ Settings Tab — Configurable and Auto-Saving
 - **Duration Settings**: Adjustable focus, short break, long break times
-- **Theme Selection**: Switch between System, Rose Pine Light, Rose Pine Dark
+- **Theme Selection**: Switch between System, Rose Pine Dawn, Rose Pine, Gruvbox Dark/Light, Solarized Dark/Light, Nord, Tokyo Night, Monokai, Vesper, Everforest, Catppuccin Latte/Frappé/Macchiato/Mocha
 - **Dual-Block Layout**: Categories on left, values on right
 - **Auto-Save**: Changes persist immediately via JSON
 

@@ -11,7 +11,7 @@
 - **Plant Growth**: Emoji-based plants that grow with each completed session
 - **Auto-Run Queue**: Queue multiple sessions to run automatically
 - **Statistics & Charts**: Daily metrics with bar charts and pie charts for productivity insights
-- **Themes**: Multiple color themes (System, Rose Pine Light, Rose Pine Dark)
+- **Themes**: Multiple color themes (System, Rose Pine Dawn, Rose Pine, Gruvbox Dark/Light, Solarized Dark/Light, Nord, Tokyo Night, Monokai, Vesper, Everforest, Catppuccin Latte/Frappé/Macchiato/Mocha)
 - **Persistence**: JSON-based saving of progress, stats, and settings
 - **Keyboard Navigation**: Fully navigable with keyboard only
 - **Streak Tracking**: Current and longest daily streaks
@@ -87,6 +87,7 @@ MIT License
 - [Devlog #1](blog/first.md) - Initial concepts and architecture
 - [Devlog #2](blog/second.md) - Implementation progress to working prototype
 - [Devlog #3](blog/third.md) - Crates.io release and community launch
+- [Devlog #4](blog/fourth.md) - Expanded theme support
 
 ## More screenshots
 ![Timer Page](https://github.com/harmoneer/taman/blob/master/screenshots/1.%20Timer%20Page.png?raw=true)

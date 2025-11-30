@@ -309,6 +309,7 @@ pub fn draw_stats(f: &mut Frame, app: &App, area: Rect) {
                 .lines(vec![Line::from(format!("{:^3}", display_streak.to_string()))])
                 .pixel_size(PixelSize::Quadrant)
                 .alignment(Alignment::Center)
+                .style(Style::default().fg(app.theme.secondary_text))
                 .build();
             let block = Block::default()
                 .title(Line::from(" Current Streak ").style(Style::default().fg(app.theme.blocks)))
@@ -334,16 +335,18 @@ pub fn draw_stats(f: &mut Frame, app: &App, area: Rect) {
             ]).split(areas[0]);
             let date_inner = date_block.inner(block_areas[1]);
             f.render_widget(date_block, block_areas[1]);
-            let big_date = BigText::builder()
-                .lines(vec![Line::from(date.as_str())])
-                .pixel_size(PixelSize::Quadrant)
-                .alignment(Alignment::Center)
-                .build();
             let date_areas = Layout::vertical([
                 Constraint::Length(1),
                 Constraint::Fill(1),
             ]).split(date_inner);
-            f.render_widget(big_date, date_areas[1]);
+            f.render_widget(
+                BigText::builder()
+                    .lines(vec![Line::from(date.as_str()).style(Style::default().fg(app.theme.secondary_text))])
+                    .pixel_size(PixelSize::Quadrant)
+                    .alignment(Alignment::Center)
+                    .build(),
+                date_areas[1],
+            );
             let counting_block = Block::default()
                 .title(Line::from(" Counting ").alignment(Alignment::Center))
                 .title_bottom(Line::from(" days ").alignment(Alignment::Center))
@@ -371,6 +374,11 @@ pub fn draw_stats(f: &mut Frame, app: &App, area: Rect) {
                     .alignment(Alignment::Center),
                 areas[3],
             );
+            f.render_widget(
+                Paragraph::new("")
+                    .alignment(Alignment::Center),
+                areas[3],
+            );
         }
         8 => {
             // Text display for Longest Streak
@@ -380,6 +388,7 @@ pub fn draw_stats(f: &mut Frame, app: &App, area: Rect) {
                 .lines(vec![Line::from(format!("{:^3}", streak.to_string()))])
                 .pixel_size(PixelSize::Quadrant)
                 .alignment(Alignment::Center)
+                .style(Style::default().fg(app.theme.secondary_text))
                 .build();
             let block = Block::default().title(Line::from(" Longest Streak ").style(Style::default().fg(app.theme.blocks))).borders(Borders::ALL).style(Style::default().fg(app.theme.blocks)).padding(Padding::new(1, 0, 1, 0));
             let inner = block.inner(chunks[1]);
@@ -401,16 +410,18 @@ pub fn draw_stats(f: &mut Frame, app: &App, area: Rect) {
             ]).split(areas[0]);
             let date_inner = date_block.inner(block_areas[1]);
             f.render_widget(date_block, block_areas[1]);
-            let big_date = BigText::builder()
-                .lines(vec![Line::from(date.as_str())])
-                .pixel_size(PixelSize::Quadrant)
-                .alignment(Alignment::Center)
-                .build();
             let date_areas = Layout::vertical([
                 Constraint::Length(1),
                 Constraint::Fill(1),
             ]).split(date_inner);
-            f.render_widget(big_date, date_areas[1]);
+            f.render_widget(
+                BigText::builder()
+                    .lines(vec![Line::from(date.as_str()).style(Style::default().fg(app.theme.secondary_text))])
+                    .pixel_size(PixelSize::Quadrant)
+                    .alignment(Alignment::Center)
+                    .build(),
+                date_areas[1],
+            );
             let counting_block = Block::default()
                 .title(Line::from(" Counting ").alignment(Alignment::Center))
                 .title_bottom(Line::from(" days ").alignment(Alignment::Center))

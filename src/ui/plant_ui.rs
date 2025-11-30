@@ -50,7 +50,7 @@ pub fn draw_plant(f: &mut Frame, app: &App, area: Rect) {
         ])
         .split(emoji_inner);
     let emoji_para = Paragraph::new(app.plant.stage.icon())
-        .style(Style::default().fg(app.theme.text))
+        .style(Style::default().fg(app.theme.blocks))
         .alignment(Alignment::Center);
     f.render_widget(emoji_para, emoji_vert[1]);
 
@@ -78,7 +78,7 @@ pub fn draw_plant(f: &mut Frame, app: &App, area: Rect) {
     };
     let info = format!("{} sessions to {}", app.plant.sessions_to_next_stage(), next_stage);
     let para = Paragraph::new(info)
-        .style(Style::default().fg(app.theme.text))
+        .style(Style::default().fg(app.theme.blocks))
         .alignment(Alignment::Center);
     f.render_widget(para, left_inner[3]);
 
@@ -98,14 +98,14 @@ pub fn draw_plant(f: &mut Frame, app: &App, area: Rect) {
     // Plants
     let plants_text = "🪴".repeat(app.garden.total_completed());
     let plants_para = Paragraph::new(plants_text)
-        .style(Style::default().fg(app.theme.text))
+        .style(Style::default().fg(app.theme.blocks))
         .block(Block::default().padding(Padding::horizontal(1)));
     f.render_widget(plants_para, right_inner[0]);
 
     // Total
     let total = format!("Total fully grown plants: {}", app.garden.total_completed());
     let total_para = Paragraph::new(total)
-        .style(Style::default().fg(app.theme.secondary_text))
+        .style(Style::default().fg(app.theme.blocks))
         .block(Block::default().padding(Padding::horizontal(1)));
     f.render_widget(total_para, right_inner[1]);
 }

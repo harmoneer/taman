@@ -15,10 +15,28 @@ pub fn draw_settings(f: &mut Frame, app: &App, area: Rect) {
         .split(area);
 
     // Left: Settings list
+    let theme_name = match app.settings.theme {
+        crate::theme::ThemeVariant::System => "System",
+        crate::theme::ThemeVariant::RosePineDawn => "Rose Pine Dawn",
+        crate::theme::ThemeVariant::RosePine => "Rose Pine",
+        crate::theme::ThemeVariant::GruvboxDark => "Gruvbox Dark",
+        crate::theme::ThemeVariant::GruvboxLight => "Gruvbox Light",
+        crate::theme::ThemeVariant::SolarizedDark => "Solarized Dark",
+        crate::theme::ThemeVariant::SolarizedLight => "Solarized Light",
+        crate::theme::ThemeVariant::Nord => "Nord",
+        crate::theme::ThemeVariant::TokyoNight => "Tokyo Night",
+        crate::theme::ThemeVariant::Monokai => "Monokai",
+        crate::theme::ThemeVariant::Vesper => "Vesper",
+        crate::theme::ThemeVariant::Everforest => "Everforest",
+        crate::theme::ThemeVariant::CatppuccinLatte => "Catppuccin Latte",
+        crate::theme::ThemeVariant::CatppuccinFrappe => "Catppuccin Frappé",
+        crate::theme::ThemeVariant::CatppuccinMacchiato => "Catppuccin Macchiato",
+        crate::theme::ThemeVariant::CatppuccinMocha => "Catppuccin Mocha",
+    };
     let settings = [format!("Focus Duration: {} min", app.settings.focus_duration),
         format!("Short Break: {} min", app.settings.short_break_duration),
         format!("Long Break: {} min", app.settings.long_break_duration),
-        format!("Theme: {:?}", app.settings.theme)];
+        format!("Theme: {}", theme_name)];
     let items: Vec<ListItem> = settings
         .iter()
         .enumerate()
@@ -74,11 +92,24 @@ pub fn draw_settings(f: &mut Frame, app: &App, area: Rect) {
             ])).style(style)]
         }
         3 => {
-            let themes = ["System", "Rose Pine Light", "Rose Pine Dark"];
+            let themes = ["System", "Rose Pine Dawn", "Rose Pine", "Gruvbox Dark", "Gruvbox Light", "Solarized Dark", "Solarized Light", "Nord", "Tokyo Night", "Monokai", "Vesper", "Everforest", "Catppuccin Latte", "Catppuccin Frappé", "Catppuccin Macchiato", "Catppuccin Mocha"];
             let current_index = match app.settings.theme {
                 crate::theme::ThemeVariant::System => 0,
-                crate::theme::ThemeVariant::RosePineLight => 1,
-                crate::theme::ThemeVariant::RosePineDark => 2,
+                crate::theme::ThemeVariant::RosePineDawn => 1,
+                crate::theme::ThemeVariant::RosePine => 2,
+                crate::theme::ThemeVariant::GruvboxDark => 3,
+                crate::theme::ThemeVariant::GruvboxLight => 4,
+                crate::theme::ThemeVariant::SolarizedDark => 5,
+                crate::theme::ThemeVariant::SolarizedLight => 6,
+                crate::theme::ThemeVariant::Nord => 7,
+                crate::theme::ThemeVariant::TokyoNight => 8,
+                crate::theme::ThemeVariant::Monokai => 9,
+                crate::theme::ThemeVariant::Vesper => 10,
+                crate::theme::ThemeVariant::Everforest => 11,
+                crate::theme::ThemeVariant::CatppuccinLatte => 12,
+                crate::theme::ThemeVariant::CatppuccinFrappe => 13,
+                crate::theme::ThemeVariant::CatppuccinMacchiato => 14,
+                crate::theme::ThemeVariant::CatppuccinMocha => 15,
             };
             themes.iter().enumerate().map(|(i, &theme)| {
                 let prefix = if i == current_index { "→ " } else { "  " };

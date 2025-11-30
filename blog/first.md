@@ -19,7 +19,7 @@ It’s designed to be:
 
 - ✨ **cute** (plants grow!)
 - 🧭 **navigable by keyboard** only
-- 🎨 **theme-aware** (System / Rose Pine Light / Rose Pine Dark)
+- 🎨 **theme-aware** (System / Rose Pine Dawn / Rose Pine / Gruvbox Dark/Light / Solarized Dark/Light / Nord / Tokyo Night / Monokai / Vesper / Everforest / Catppuccin Latte/Frappé/Macchiato/Mocha)
 - 📈 **stats-rich**, including charts
 - 🪴 **game-ified**, but without distractions  
 
@@ -174,7 +174,7 @@ Much cleaner. Much happier.
       "short_break": 5,
       "long_break": 15
     },
-    "theme": "RosePineDark"
+    "theme": "RosePine"
   }
 }
 ```
