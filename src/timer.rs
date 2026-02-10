@@ -95,12 +95,11 @@ impl Timer {
     pub fn tick(&mut self) -> bool { // returns true if session finished
         if self.state == TimerState::Running {
             if let Some(last) = self.last_tick {
-                let elapsed = last.elapsed();
-                if elapsed >= Duration::from_secs(1) {
-                    if self.remaining_seconds > 0 {
-                        self.remaining_seconds -= 1;
-                    }
-                    self.last_tick = Some(Instant::now());
+                let elapsed_secs = last.elapsed().as_secs();
+                if elapsed_secs >= 1 {
+                    let decrement = elapsed_secs.min(self.remaining_seconds);
+                    self.remaining_seconds -= decrement;
+                    self.last_tick = Some(last + Duration::from_secs(elapsed_secs));
                     if self.remaining_seconds == 0 {
                         self.state = TimerState::Finished;
                         return true;
